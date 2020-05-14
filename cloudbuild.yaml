@@ -28,4 +28,4 @@ steps:
 
 substitutions:
   _CUSTOM_REGION: us-central1-c
-  _CUSTOM_CLUSTER: launch-cluster
+  _CUSTOM_CLUSTER: launch-app
