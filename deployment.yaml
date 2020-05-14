@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: launch-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: launch-app
+  template:
+    metadata:
+      labels:
+        app: launch-app
+    spec:
+      containers:
+      - name: gke-frontend
+        image: gcr.io/big-keyword-275020/gke-frontend:latest
+        ports:
+        - containerPort: 5000
+      - name: gke-backend
+        image: gcr.io/big-keyword-275020/gke-backend:latest
+        ports:
+        - containerPort: 5001
+        volumeMounts:
+          - mountPath: /var/run/docker.sock
+            name: docker-socket-volume
+        securityContext:
+            privileged: true
+      volumes:
+        - name: docker-socket-volume
+          hostPath:
+              path: /var/run/docker.sock
+              type: File

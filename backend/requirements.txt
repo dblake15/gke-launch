@@ -1,0 +1,8 @@
+docker
+flask
+kubernetes
+pymongo[tls, srv]
+pyyaml 
+google-auth
+google-cloud-container
+

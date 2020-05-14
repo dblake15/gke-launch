@@ -1,0 +1,99 @@
+<!-- index.html -->
+{% extends 'layout.html' %}
+
+{% block styles %}
+<style>
+img {
+    max-width: 20%;
+}
+li {
+    font-size: 16pt;
+}
+</style>
+{{super()}}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Launch UI - Help!</h1>
+</div>
+<div class="container">
+    <ul class="nav nav-pills">
+        <li role="presentation"><a href="#Quickstart">Quickstart</a></li>
+        <li role="presentation"><a href="#Walkthrough">UI Walkthrough</a></li>
+        <li role="presentation"><a href="#Create">Create a Project</a></li>
+    </ul>
+</div>
+<div class="jumbotron">
+    <a name="Quickstart"></a>
+    <a class="button btn-primary btn-lg" href="javascript:history.back()"><i class="material-icons">arrow_back</i></a>
+    <div class="container">
+        <h2>How to use Launch - Quickstart Guide</h2>
+        <p>You've gotten to the web-page, now what? This tutorial will walk you through the basics of how to use Launch.</p>
+        <ol>
+            <li>When you first navigate to Launch, you are met with a screen that looks like this:</li>
+            <img src="../static/enterinfo.png">
+            <li>Enter in your GitHub username, or the username under which the project you are trying to deploy has been stored.</li>
+            <li>Click the 'Begin' button, and the next page will auto-populate with your repositories.</li>
+            <li>The next page should look like this:</li>
+            <img src="../static/repo.png">
+            <li>Select your project's repository from the drop-down, and make sure the 'Create' option is selected, then press the 'Go' button</li>
+            <li>After a few seconds, you should see a message saying your application has been deployed</li>
+            <li>Make a note of the port it is running on, and navigate to the IP address of your cluster, followed by the port you noted earlier.</li>
+            <li>For example, if your project is running on port 32123, and your cluster IP address is 192.168.90.100, your project lives at http://192.168.90.100:32123</li>
+        </ol>
+    </div>
+    <a name="Walkthrough"></a>
+    <div class="container">
+        <h2>UI Walkthrough</h2>
+        <p>At its core, the Launch UI is supposed to be simple.</p>
+        <p>You'll notice that you only need to fill in one text box, and the rest is either drop down or radio buttons.</p>
+        <p>That being said, there is much to be gained from a deep understanding of the user interface and all of its parts.</p>
+        <ul>
+            <li>
+                <h3>GitHub Username:</h3>
+                <img src="../static/enterinfo.png">
+                <p>This is where you will enter your GitHub username so that Launch can pull information about all of your public repositories</p>
+            </li>
+            <li>
+                <h3>Repository:</h3>
+                <img src="../static/repodrop.png">
+                <p>This dropdown menu is an autopopulated list of your public repositories. Simply select the correct repo from the list and you'll be on your way!</p>
+            </li>
+            <li>
+                <h3>Create/Delete:</h3>
+                <img src="../static/cdgo.png">
+                <p>These radio buttons tell Launch whether you want to Create a new Project or Delete it based on the repository name.</p>
+            </li>
+            <li>
+                <h3>Deployments associated with this username:</h3>
+                <p>When you have deployments asociated with your GitHub username, they will appear here as a list of links.</p>
+                <p>These links simply take the current IP address and append the correct port to it, so your mileage with these links may vary.</p>
+                <p>While this method is convenient, and generally accurate, it may serve you best to also keep your own records of where your projects live.</p>
+            </li>
+            
+        </ul>
+    </div>
+    <a name="Create"></a>
+    <div class="container">
+        <h2>Create a Launch-Friendly Application</h2>
+        <p>One might find importance in the knowledge of how to create an app that Launch is capable of deploying.</p>
+        <p>Launch is currently only capable of deploying static web applications, although work is being done to allow for dynamic applications.</p>
+        <p>However, if you have a static web application that you would like to deploy with Launch, all you need to do is:</p>
+        <ol>
+            <li>Create a Dockerfile for your project</li>
+            <li>Upload your project to a public repository on GitHub</li>
+            <li>That's it!</li>
+        </ol>
+        <p>If your project has more than one function (i.g. You have a UI and an API) you should create two separate folders within your application. These  </p>
+        <h2>How to create a Dockerfile:</h2>
+        <p>It's all fine and good for us to tell you that you need to create a Dockerfile for your project, but what does this mean?</p>
+        <p><a href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/">Here is some best practices when building Dockerfiles.</a></p>
+        <p><a href="https://github.com/kstaken/dockerfile-examples">Here is a repository full of example Docker applications that includes custom Dockerfiles.</a></p>
+        <p>In general, it is best practice to have one Dockerfile per task. For example, an application that has both a UI and an API should have two separate Dockerfiles, and should be in two separate folders.</p>
+        
+    </div>
+    <a class="button btn-primary btn-lg" href="javascript:history.back()"><i class="material-icons">arrow_back</i></a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{%- extends "bootstrap/base.html" %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% import "bootstrap/fixes.html" as fixes %}
+
+{% block head %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+</script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+rel="stylesheet">
+{# Make sure we don't lose all our bootstrap #}
+{{super()}}
+{{fixes.ie8()}}
+
+{% endblock %}

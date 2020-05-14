@@ -1,0 +1,7 @@
+flask
+flask-bootstrap
+markupsafe
+flask-wtf
+flask-session
+requests
+Flask-PyMongo
