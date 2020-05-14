@@ -1,4 +1,4 @@
-# steps:
+steps:
 #   - name: "gcr.io/cloud-builders/docker"
 #     args: ["build", "-t", "gcr.io/conductive-fold-275020/gke-backend:latest", "backend/"]
    
