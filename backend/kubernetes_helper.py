@@ -50,7 +50,7 @@ def create_deployment_object(images, app_name, config_location, key):
     # else:
     #     logger.info("Loading k8s config from $HOME/.kube (or your default location)")
     #     config.load_kube_config()
-    configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-cluster', key= key)
+    configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-app', key= key)
     client.Configuration.set_default(configuration)
 
     containers = []
@@ -58,7 +58,7 @@ def create_deployment_object(images, app_name, config_location, key):
     for image in images:
         logger.info("Adding container to deployment with image {}...".format(image[0]))
         containers.append(client.V1Container(
-            name=image[0].replace(":latest", '').replace(username, '').replace('/', ''),
+            name=image[0].replace("gcr.io/big-keyword-275020/",'').replace(":latest", '').replace(username, '').replace('/', ''),
             image=image[0],
             ports=[client.V1ContainerPort(container_port=int(image[1]))]
         ))
@@ -76,6 +76,7 @@ def create_deployment_object(images, app_name, config_location, key):
         
     )
     # Create and instantiate the deployment object
+    logger.info("APP_NAME: {}".format(app_name))
     deployment = client.V1Deployment(
         api_version="apps/v1",
         kind="Deployment",
@@ -95,7 +96,7 @@ def create_deployment(deployment, config_location, key):
     # else:
     #     logger.info("Loading k8s config from default")
     #     config.load_kube_config()
-    configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-cluster', key= key)
+    configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-app', key= key)
     client.Configuration.set_default(configuration)
     v1 = client.AppsV1Api()
     api_resp = v1.create_namespaced_deployment(
@@ -115,7 +116,7 @@ def update_deployment(deployment, deployment_name, config_location, key):
     # else:
     #     logger.info("Loading k8s config from default")
     #     config.load_kube_config()
-    configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-cluster', key= key)
+    configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-app', key= key)
     client.Configuration.set_default(configuration)
     v1 = client.AppsV1Api()
     api_resp = v1.patch_namespaced_deployment(
@@ -136,7 +137,7 @@ def delete_deployment(deployment_name, config_location, key, update=False): # de
     # else:
     #     logger.info("Loading k8s config from default")
     #     config.load_kube_config()
-    configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-cluster', key= key)
+    configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-app', key= key)
     client.Configuration.set_default(configuration)
 
     v1 = client.AppsV1Api()
@@ -166,7 +167,7 @@ def create_service(deployment_name, port, config_location, key): # Returns the p
     #     config.load_kube_config(config_location)
     # else:
     #     config.load_kube_config()
-    configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-cluster', key= key)
+    configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-app', key= key)
     client.Configuration.set_default(configuration)
 
     v1 = client.CoreV1Api()
@@ -209,7 +210,7 @@ def get_node_port_from_repo(repo, config_location, key):
     #     config.load_kube_config(config_location)
     # else:
     #     config.load_kube_config()
-    configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-cluster', key= key)
+    configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-app', key= key)
     client.Configuration.set_default(configuration)
 
     v1 = client.CoreV1Api()
@@ -230,7 +231,7 @@ def get_node_port_from_repo(repo, config_location, key):
 #     #     config.load_kube_config(config_location)
 #     # else:
 #     #     config.load_kube_config()
-#     configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-cluster', key= key)
+#     configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-app', key= key)
 #     client.Configuration.set_default(configuration)
 
 #     v1 = client.CoreV1Api()

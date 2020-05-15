@@ -40,7 +40,7 @@ app.secret_key = 'devkey' # There are better ways to generate a random string
 def UserForm():
     logger.info("Begin")
     #subprocess.call(['gcloud', 'auth', 'login', '--no-launch-browser'])
-    subprocess.call(['gcloud', 'auth', 'configure-docker'])
+    #subprocess.call(['gcloud', 'auth', 'configure-docker'])
     logger.info("End")
     print("as;ldkfjaslkdfj", file = sys.stderr)
     form = User()

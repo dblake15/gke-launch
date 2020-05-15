@@ -73,13 +73,12 @@ def create_image(repo, user, key, path_to_dockerfile, is_frontend=False):
    # client = docker.DockerClient(base_url='unix://var/run/docker.sock')
     client = docker.from_env()
     path_to_dockerfile = path_to_dockerfile.replace('Dockerfile', '')
-    tag ="gcr.io/conductive-fold-275020/" + path_to_dockerfile.replace(homedir(), '').replace(user, '').replace('/', '') + ":latest"
-    print("tag: ", tag)
+    tag ="gcr.io/big-keyword-275020/" + path_to_dockerfile.replace(homedir(), '').replace(user, '').replace('/', '') + ":latest"
     client.images.build(path=path_to_dockerfile, rm=True, tag=tag, platform='amd64')
     logger.info("Image tag is: {}".format(tag))
     key = "$(" + key + ")"
     logger.info("stringified for docker login key: {}".format(key))
-    client.login(username="_json_key", password = key, email= None, registry= "https://gcr.io", reauth= False, dockercfg_path=None)
+    client.login(username="_json_key", password = key, email= "56442907402-compute@developer.gserviceaccount.com", registry= "https://gcr.io", reauth= False, dockercfg_path=None)
     client.images.push(tag)
     #end image creation
 

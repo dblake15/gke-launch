@@ -87,6 +87,7 @@ def deploy(update=None):
             logger.debug("clone_repo({}, {}) returned FALSE".format(user, repo))
             return("Something got messed up!")
         deployment_name = repo
+        logger.info("DEPLOYMENT NAME: {}".format(deployment_name))
         logger.debug("Contents of variable 'images': {}".format(images))
         logger.info("Length of images: {}".format(len(images)))
         try:
