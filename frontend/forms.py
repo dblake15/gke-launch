@@ -3,8 +3,6 @@ from wtforms.fields import StringField, SubmitField, SelectField, RadioField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from markupsafe import Markup
 
-
-
 class GithubRepo(FlaskForm):
     # Main form for the tool
     #database_list = [('custom', 'Custom'), ('mongo', 'MongoDB'), ('postgres', 'PostgreSQL'), ('redis', 'Redis'), ('mysql', 'MySQL')]
@@ -15,6 +13,6 @@ class GithubRepo(FlaskForm):
     submit = SubmitField(label=u'Go!')
 
 class User(FlaskForm):
-    key = StringField(label = u'Enter your Google Cloud Key:', validators=[DataRequired()])
+    #key = StringField(label = u'Enter your Google Cloud Key:', validators=[DataRequired()])
     user = StringField(label=u'Github Username:', validators=[DataRequired()])
     submit =  SubmitField(u'Begin')

@@ -41,18 +41,8 @@ def create_deployment_object(images, app_name, config_location, key):
         username = os.environ['DOCKERUSER']
     except:
         username = 'stolaunch'
-    # if 'DEPLOYED' in os.environ:
-    #     logger.info("Running in a k8s cluster")
-    #     config.load_incluster_config()
-    # elif config_location != None:
-    #     logger.info("Loading k8s config from {}".format(config_location))
-    #     config.load_kube_config(config_location)
-    # else:
-    #     logger.info("Loading k8s config from $HOME/.kube (or your default location)")
-    #     config.load_kube_config()
     configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-app', key= key)
     client.Configuration.set_default(configuration)
-
     containers = []
     # Create a container for each image
     for image in images:
@@ -88,14 +78,6 @@ def create_deployment_object(images, app_name, config_location, key):
 
 def create_deployment(deployment, config_location, key):
     logger.debug("Creating deployment")
-    # if 'DEPLOYED' in os.environ:
-    #     logger.info("Running in a k8s cluster")
-    #     config.load_incluster_config()
-    # elif config_location != None:
-    #     config.load_kube_config(config_location)
-    # else:
-    #     logger.info("Loading k8s config from default")
-    #     config.load_kube_config()
     configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-app', key= key)
     client.Configuration.set_default(configuration)
     v1 = client.AppsV1Api()
@@ -107,15 +89,6 @@ def create_deployment(deployment, config_location, key):
     return
 
 def update_deployment(deployment, deployment_name, config_location, key):
-    # if 'DEPLOYED' in os.environ:
-    #     logger.info("Running in a k8s cluster")
-    #     config.load_incluster_config()
-    # elif config_location != None:
-    #     logger.info("Loading k8s config from {}".format(config_location))
-    #     config.load_kube_config(config_location)
-    # else:
-    #     logger.info("Loading k8s config from default")
-    #     config.load_kube_config()
     configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-app', key= key)
     client.Configuration.set_default(configuration)
     v1 = client.AppsV1Api()
@@ -128,18 +101,8 @@ def update_deployment(deployment, deployment_name, config_location, key):
     return
 
 def delete_deployment(deployment_name, config_location, key, update=False): # deployment_name is just <repo>
-    # if 'DEPLOYED' in os.environ:
-    #     logger.info("Running in a k8s cluster")
-    #     config.load_incluster_config()
-    # elif config_location != None:
-    #     logger.info("Loading k8s config from {}".format(config_location))
-    #     config.load_kube_config(config_location)
-    # else:
-    #     logger.info("Loading k8s config from default")
-    #     config.load_kube_config()
     configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-app', key= key)
     client.Configuration.set_default(configuration)
-
     v1 = client.AppsV1Api()
     corev1 = client.CoreV1Api()
     api_resp = v1.delete_namespaced_deployment(
@@ -159,14 +122,6 @@ def delete_deployment(deployment_name, config_location, key, update=False): # de
     return
 
 def create_service(deployment_name, port, config_location, key): # Returns the port to find this service at
-    # if 'DEPLOYED' in os.environ:
-    #     logger.info("Running in a k8s cluster")
-    #     config.load_incluster_config()
-    # elif config_location != None:
-    #     logger.info("Loading k8s config from {}".format(config_location))
-    #     config.load_kube_config(config_location)
-    # else:
-    #     config.load_kube_config()
     configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-app', key= key)
     client.Configuration.set_default(configuration)
 
@@ -202,14 +157,6 @@ def create_service(deployment_name, port, config_location, key): # Returns the p
 
 # returns the port that you can access the deployment at, if the deployment has been created
 def get_node_port_from_repo(repo, config_location, key):
-    # if 'DEPLOYED' in os.environ:
-    #     logger.info("Running in a k8s cluster")
-    #     config.load_incluster_config()
-    # elif config_location != None:
-    #     logger.info("Loading k8s config from {}".format(config_location))
-    #     config.load_kube_config(config_location)
-    # else:
-    #     config.load_kube_config()
     configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-app', key= key)
     client.Configuration.set_default(configuration)
 
@@ -223,14 +170,6 @@ def get_node_port_from_repo(repo, config_location, key):
     return "None"
 
 # def get_deployments_from_username(user, config_location, key):
-#     # if 'DEPLOYED' in os.environ:
-#     #     logger.info("Running in a k8s cluster")
-#     #     config.load_incluster_config()
-#     # elif config_location != None:
-#     #     logger.info("Loading k8s config from {}".format(config_location))
-#     #     config.load_kube_config(config_location)
-#     # else:
-#     #     config.load_kube_config()
 #     configuration = google_authenticate('big-keyword-275020', 'us-central1-c', 'launch-app', key= key)
 #     client.Configuration.set_default(configuration)
 

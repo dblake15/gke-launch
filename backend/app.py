@@ -16,16 +16,6 @@ logging.basicConfig(filename="backend.log", format='%(levelname)s: %(asctime)s %
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
-
-# try:
-#     client = MongoClient("mongodb+srv://{}:{}@launch-emlpr.gcp.mongodb.net/LaunchDB?retryWrites=true&w=majority".format(config.username,config.password))
-#     db = client['LaunchDB']
-#     users = db.users
-#     logger.info("mongodb set up complete")
-#     logger.info("setup users collection")
-# except:
-#     logger.warning("no connection to mongodb")
-
 try:
     logger.info("Docker username set by environment variables: {}".format(os.environ['DOCKERUSER']))
 except:
@@ -42,29 +32,11 @@ def home():
 def api(query):
     logger.debug("GET request to '/api/{}".format(query))
     return("Placeholder")
-# finds all objects in database, then makes jsonfile with all objects
-# @app.route('/api/getAll',methods=['GET'])
-# def getAllObj():
-#     logger.debug("GET request to '/api/getAll")
-#     json_data = db.users.find()
-#     writeTOJSONFile(json_data)
-# def writeTOJSONFile(json_data):
-#     file = open("all_objects.json", "w")
-#     json_docs = []
-#     file.write('[')
-#     for document in json_data:
-#         json_docs = json.dumps(document, default=json_util.default)
-#         json_docs.append(json_docs)
-#         file.write(json.dumps(document))
-#         file.write(',')
-#     file.write(']')
-#     return json_docs
-# Responds to POST requests that contain JSON data
+
 @app.route('/deploy', methods=['POST'])
 @app.route('/deploy/<update>')
 def deploy(update=None):
     if request.method == "POST":
-        
         json_data = request.get_json()
         key = json_data['key']
         logger.info("Value of the key is: {}".format(key))

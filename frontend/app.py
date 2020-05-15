@@ -20,6 +20,23 @@ placed in their main code folder so that we can dynamically update ip addresses.
 
 Better ideas for this will be gladly accepted.
 '''
+def getServiceAccountEmail():
+    f = open("service-account.txt", 'r')
+    content = f.read()
+    print("content: ",content)
+    content = content.split('\n')
+    data = []
+    content.pop(0)
+    for i in range(0, len(content)):
+        temp = content[i].split(' ')
+        print("temp: ",temp)
+        for element in temp:
+            if len(element) <=  1:
+                continue
+            else:
+                data.append(element)
+    print("email: ",data[len(data) -2])
+    return data[len(data) -2]
 try:
     f = open('backend_ip', 'r')
     backend_host = f.readline().replace('\n', '').replace(' ', '').replace('"', '').replace("'", "")
@@ -29,24 +46,50 @@ except:
     backend_port = '5001'
 
 logger.info("Backend IP is: " + backend_host + ":" + backend_port)
-
 # Create our global variable 'app'
 app = Flask(__name__, template_folder='templates', static_folder="static")
 Bootstrap(app) # Bootstraps the entire project, very useful for neat CSS
 app.secret_key = 'devkey' # There are better ways to generate a random string
-
-# App routes are used to handle browser requests at different endpoints in our project
 @app.route('/', methods = ('GET', 'POST'))
 def UserForm():
-    logger.info("Begin")
-    #subprocess.call(['gcloud', 'auth', 'login', '--no-launch-browser'])
-    #subprocess.call(['gcloud', 'auth', 'configure-docker'])
-    logger.info("End")
-    print("as;ldkfjaslkdfj", file = sys.stderr)
+    subprocess.call(['gcloud', 'auth', 'login'])
+    sfd = open("service-account.txt", 'w')
+    subprocess.call(['gcloud', 'iam', 'service-accounts', 'list', '--filter="default"'], stdout = sfd)
+    sfd.close()
+    service_account_email = getServiceAccountEmail()
+    try: 
+        f = open('~/google_key.json')
+        key = f.read()
+        f.close()
+    except:
+        try:
+            logger.info("global key not found, trying local")
+            f  = open('google_key.json')
+            key = f.read()
+            f.close()
+        except:
+            logger.info("local key not found, creating new key for your account")
+            subprocess.call(['gcloud', 'iam', 'service-accounts', 'keys', 'create', '--iam-account='+service_account_email, '~/google_key.json' ])
+    #subprocess.call(['docker', 'login', '-u', '_json_key', '-p', '"$('+key+')"' 'https://gcr.io'])
+    #logger.info("Configuring docker")
+    # try:
+    #     f = open('~/.docker/config.json','r')
+    #     data = f.read()
+    #     logger.info("docker config file: {}".format(data))
+    #     f.close()
+    # except:
+    #     logger.info("global docker config file not found trying local")
+    #     try:
+    #         f = open("config.json", 'r')
+    #         data = f.read()
+    #         logger.info("local docker config file: {}".format(data))
+    #         f.close()
+    #     except:
+    #         logger.info("local docker config file not found")
     form = User()
     if request.method == 'POST':
         session['user'] = form.user.data
-        session['key'] = form.key.data
+        session['key'] = key
         return redirect('/repo')
     return render_template('form.html', form=form, title="Launch UI")
 
