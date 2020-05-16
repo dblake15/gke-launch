@@ -52,23 +52,26 @@ Bootstrap(app) # Bootstraps the entire project, very useful for neat CSS
 app.secret_key = 'devkey' # There are better ways to generate a random string
 @app.route('/', methods = ('GET', 'POST'))
 def UserForm():
+    #the following commented out portion is the automated authentication feature, this feature worked locally, but on the gke cluster it did not 
     subprocess.call(['gcloud', 'auth', 'login'])
-    sfd = open("service-account.txt", 'w')
-    subprocess.call(['gcloud', 'iam', 'service-accounts', 'list', '--filter="default"'], stdout = sfd)
-    sfd.close()
-    service_account_email = getServiceAccountEmail()
     try: 
         f = open('~/google_key.json')
         key = f.read()
         f.close()
+        "global key found!"
     except:
         try:
             logger.info("global key not found, trying local")
             f  = open('google_key.json')
             key = f.read()
             f.close()
+            logger.info("local key found!")
         except:
             logger.info("local key not found, creating new key for your account")
+            sfd = open("service-account.txt", 'w')
+            subprocess.call(['gcloud', 'iam', 'service-accounts', 'list', '--filter="default"'], stdout = sfd)
+            sfd.close()
+            service_account_email = getServiceAccountEmail()
             subprocess.call(['gcloud', 'iam', 'service-accounts', 'keys', 'create', '--iam-account='+service_account_email, '~/google_key.json' ])
     #subprocess.call(['docker', 'login', '-u', '_json_key', '-p', '"$('+key+')"' 'https://gcr.io'])
     #logger.info("Configuring docker")

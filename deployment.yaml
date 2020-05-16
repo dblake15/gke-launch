@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: launch-app
+  name: gke-launch
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: launch-app
+      app: gke-launch
   template:
     metadata:
       labels:
-        app: launch-app
+        app: gke-launch
     spec:
       containers:
       - name: gke-frontend
